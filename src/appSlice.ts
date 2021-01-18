@@ -59,18 +59,17 @@ const appSlice = createSlice({
     toggleBasket: (state, { payload }: PayloadAction<{ toggle: boolean }>) => {
       state.toggleBasket = !payload.toggle;
     },
-    setPopUpItem: (state, { payload }: PayloadAction<{ id: number }>) => {
+    togglePopUp: (
+      state,
+      { payload }: PayloadAction<{ toggle: boolean; id: number }>
+    ) => {
       if (payload.id) {
         const index: number = state.storeItems.findIndex(
           (item) => item.id === payload.id
         );
         state.popUpItem = state.storeItems[index];
+        state.togglePopUp = !payload.toggle;
       }
-    },
-    togglePopUp: (state, { payload }: PayloadAction<{ toggle: boolean }>) => {
-      state.togglePopUp = !payload.toggle;
-      console.log(state.togglePopUp);
-      console.log(state.popUpItem);
     },
   },
 });
@@ -80,7 +79,6 @@ export const {
   addItemToBasket,
   removeItemFromBasket,
   toggleBasket,
-  setPopUpItem,
   togglePopUp,
 } = appSlice.actions;
 

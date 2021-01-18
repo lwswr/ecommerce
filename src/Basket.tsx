@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { AppState, BasketItem } from "./App";
+import { BasketItem } from "./App";
 import { removeItemFromBasket } from "./appSlice";
 import { BasketItemComp } from "./BasketItemComp";
 
@@ -39,12 +39,12 @@ const calculateTotal = (array: BasketItem[]) => {
 };
 
 export const Basket = ({ basketItems }: { basketItems: BasketItem[] }) => {
-  const { toggleBasket } = useSelector(selectState);
+  const toggleBasketView = useSelector(selectToggle);
   const dispatch = useDispatch();
 
   return (
     <BasketColumn>
-      {toggleBasket ? (
+      {toggleBasketView ? (
         <BasketItemsWindow>
           {basketItems.map((basketItem) => {
             return (
@@ -62,4 +62,4 @@ export const Basket = ({ basketItems }: { basketItems: BasketItem[] }) => {
   );
 };
 
-const selectState = ({ state }: { state: AppState }) => state;
+const selectToggle = (toggleBasket: { toggleBasket: boolean }) => toggleBasket;

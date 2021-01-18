@@ -2,7 +2,6 @@ import * as React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { StoreItem } from "./API";
-import { AppState } from "./App";
 
 const ItemContainer = styled.div`
   display: flex;
@@ -11,16 +10,20 @@ const ItemContainer = styled.div`
   box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
     rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
   width: 50%;
-  margin: auto;
+  height: 75vh;
   padding: 1rem 3rem;
   z-index: 12;
-  position: relative;
   background: rgb(240, 239, 239);
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 `;
 
 const ItemWindow = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   width: 100%;
   height: 100%;
@@ -33,14 +36,13 @@ const ItemWindow = styled.div`
 `;
 
 const Button = styled.button`
-  font-size: 30px;
   background: rgb(0, 137, 216);
   border: 1px solid rgb(0, 137, 216);
   transition: 0.2s;
   color: white;
   border-radius: 5px;
   padding: 5px;
-
+  margin-right: 1rem;
   :hover {
     background: rgb(0, 90, 173);
     border: 1px solid rgb(0, 90, 173);
@@ -52,6 +54,7 @@ const NumberInput = styled.input`
   border: 1px solid rgb(0, 137, 216);
   border-radius: 5px;
   padding: 5px;
+  margin-right: 1rem;
   transition: 0.2s;
   :hover {
     box-shadow: rgba(0, 90, 173, 0.2) 0px 3px 6px,
@@ -60,6 +63,23 @@ const NumberInput = styled.input`
 `;
 
 const Inputs = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-top: 1px solid lightgrey;
+  padding-top: 1rem;
+`;
+
+const Title = styled.div`
+  font-size: 30px;
+`;
+
+const Price = styled.div`
+  padding: 5px;
+  margin-right: 1rem;
+`;
+
+const ProductInterface = styled.div`
   display: flex;
   flex-direction: row;
 `;
@@ -73,41 +93,46 @@ export const DetailedItem = ({
   addItem: (id: number, qty: number) => void;
   togglePU: (toggle: boolean, id: number) => void;
 }) => {
-  const { togglePopUp } = useSelector(selectState);
+  const togglePopUpView = useSelector(selectToggle);
   const [qty, setQty] = React.useState<number>(1);
   return (
     <ItemContainer>
       <ItemWindow>
-        PopUp
-        <div>{item.title}</div>
-        <div>{item.price}</div>
+        <Title>{item.title}</Title>
         <div>{item.description}</div>
-        <img
-          src={item.image}
-          alt=""
-          style={{ height: "120px", width: "90px" }}
-        />
-        <Inputs>
-          <NumberInput
-            type="number"
-            value={qty}
-            onChange={(e) => setQty(parseInt(e.target.value))}
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <img
+            src={item.image}
+            alt=""
+            style={{ width: "25%", height: "auto", padding: "20px 0 20px 0" }}
           />
-          <Button
-            onClick={() => {
-              if (qty > 0) {
-                addItem(item.id, qty);
-                setQty(1);
-              }
-            }}
-          >
-            Add to Basket
+        </div>
+        <Inputs>
+          <ProductInterface>
+            <Price>£{item.price.toFixed(2)}</Price>
+            <NumberInput
+              type="number"
+              value={qty}
+              onChange={(e) => setQty(parseInt(e.target.value))}
+            />
+            <Button
+              onClick={() => {
+                if (qty > 0) {
+                  addItem(item.id, qty);
+                  setQty(1);
+                }
+              }}
+            >
+              Add to Basket
+            </Button>
+          </ProductInterface>
+          <Button onClick={() => togglePU(togglePopUpView, item.id)}>
+            Back
           </Button>
-          <Button onClick={() => togglePU(togglePopUp, item.id)}>Back</Button>
         </Inputs>
       </ItemWindow>
     </ItemContainer>
   );
 };
 
-const selectState = ({ state }: { state: AppState }) => state;
+const selectToggle = (togglePopUp: boolean) => togglePopUp;

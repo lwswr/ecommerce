@@ -5,7 +5,6 @@ import { getAPIData, StoreItem } from "./API";
 import {
   addItemToBasket,
   setData,
-  setPopUpItem,
   toggleBasket,
   togglePopUp,
 } from "./appSlice";
@@ -31,6 +30,7 @@ export type AppState = {
 
 const MainContainer = styled.div`
   width: 100vw;
+  height: 100%;
 `;
 
 const TopNav = styled.div`
@@ -50,6 +50,22 @@ const DropDown = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;
+`;
+
+const LoadingCon = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Loading = styled.div`
+  font-size: 75px;
+  padding: 3rem;
+  border-radius: 200px;
+  background: rgba(0, 137, 216, 0.8);
+  color: white;
 `;
 
 function App() {
@@ -83,28 +99,42 @@ function App() {
           <Basket basketItems={state.basketItems} />
         </DropDown>
       ) : null}
-      {state.togglePopUp ? (
-        <DetailedItem
-          item={state.popUpItem}
-          addItem={(_id, _qty) =>
-            dispatch(addItemToBasket({ id: _id, qty: _qty }))
-          }
-          togglePU={(_toggle, _id) => {
-            dispatch(togglePopUp({ toggle: _toggle }));
-            dispatch(setPopUpItem({ id: _id }));
-          }}
-        />
+      {state.storeItems.length === 0 ? (
+        <LoadingCon>
+          <Loading>Loading...</Loading>
+        </LoadingCon>
       ) : (
-        <StoreItems
-          storeItems={state.storeItems}
-          addItem={(_id, _qty) => {
-            dispatch(addItemToBasket({ id: _id, qty: _qty }));
+        <div
+          style={{
+            display: "flex",
+            height: "100%",
+            justifyContent: "center",
+            alignContent: "center",
+            alignItems: "center",
           }}
-          togglePU={(_toggle, _id) => {
-            dispatch(togglePopUp({ toggle: _toggle }));
-            dispatch(setPopUpItem({ id: _id }));
-          }}
-        />
+        >
+          {state.togglePopUp ? (
+            <DetailedItem
+              item={state.popUpItem}
+              addItem={(_id, _qty) =>
+                dispatch(addItemToBasket({ id: _id, qty: _qty }))
+              }
+              togglePU={(_toggle, _id) => {
+                dispatch(togglePopUp({ toggle: _toggle, id: _id }));
+              }}
+            />
+          ) : (
+            <StoreItems
+              storeItems={state.storeItems}
+              addItem={(_id, _qty) => {
+                dispatch(addItemToBasket({ id: _id, qty: _qty }));
+              }}
+              togglePU={(_toggle, _id) => {
+                dispatch(togglePopUp({ toggle: _toggle, id: _id }));
+              }}
+            />
+          )}
+        </div>
       )}
     </MainContainer>
   );
