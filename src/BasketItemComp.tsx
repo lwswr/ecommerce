@@ -13,22 +13,33 @@ const Item = styled.div`
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 `;
 
-const QtyAndDelete = styled.div`
+const QtyAndPrice = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const ProductInterface = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid lightgrey;
 `;
 
 const Title = styled.div`
   font-size: 1rem;
-  padding: 0.5rem 0 0.5rem 0;
+  padding: 0.5rem 0 1rem 0;
 `;
 
 const Price = styled.div`
   font-size: 1rem;
 `;
 
-const Qty = styled.div``;
+const Qty = styled.div`
+  margin-left: 1rem;
+  color: grey;
+`;
 
 const Button = styled.button`
   background: rgb(0, 137, 216);
@@ -54,13 +65,15 @@ export const BasketItemComp = ({
   return (
     <Item>
       <Title>{basketItem.storeItem.title}</Title>
-      <Price>{basketItem.storeItem.price.toFixed(2)}</Price>
-      <QtyAndDelete>
-        <Qty>Qty {basketItem.quantity}</Qty>
+      <ProductInterface>
+        <QtyAndPrice>
+          <Price>£{basketItem.storeItem.price.toFixed(2)}</Price>
+          <Qty>Qty {basketItem.quantity}</Qty>
+        </QtyAndPrice>
         <Button onClick={() => onDelete(basketItem.storeItem.id)}>
           Delete
         </Button>
-      </QtyAndDelete>
+      </ProductInterface>
     </Item>
   );
 };
