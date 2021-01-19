@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { getAPIData, StoreItem } from "./API";
 import {
   addItemToBasket,
+  AppState,
   setData,
   toggleBasket,
   togglePopUp,
@@ -14,19 +15,6 @@ import { DetailedItem } from "./DetailedItem";
 import { AddDispatch } from "./store";
 import { StoreItems } from "./StoreItems";
 import { SVGs } from "./SVGs";
-
-export type BasketItem = {
-  storeItem: StoreItem;
-  quantity: number;
-};
-
-export type AppState = {
-  storeItems: StoreItem[];
-  basketItems: BasketItem[];
-  toggleBasket: boolean;
-  togglePopUp: boolean;
-  popUpItem: StoreItem;
-};
 
 const MainContainer = styled.div`
   width: 100vw;

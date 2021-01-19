@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BasketItem } from "./App";
+import { BasketItem } from "./appSlice";
 import styled from "styled-components";
 
 const Item = styled.div`
@@ -7,7 +7,7 @@ const Item = styled.div`
   margin-bottom: 0.5rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-space-evenly;
   padding: 0.5rem;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
@@ -56,7 +56,7 @@ export const BasketItemComp = ({
       <Title>{basketItem.storeItem.title}</Title>
       <Price>{basketItem.storeItem.price.toFixed(2)}</Price>
       <QtyAndDelete>
-        <Qty>{basketItem.quantity}</Qty>
+        <Qty>Qty {basketItem.quantity}</Qty>
         <Button onClick={() => onDelete(basketItem.storeItem.id)}>
           Delete
         </Button>

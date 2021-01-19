@@ -2,7 +2,7 @@ import * as React from "react";
 import { StoreItem } from "./API";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { AppState } from "./App";
+import { AppState } from "./appSlice";
 
 const StoreItemContainer = styled.div`
   display: flex;

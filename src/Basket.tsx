@@ -1,8 +1,7 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { BasketItem } from "./App";
-import { removeItemFromBasket } from "./appSlice";
+import { BasketItem, removeItemFromBasket } from "./appSlice";
 import { BasketItemComp } from "./BasketItemComp";
 
 const BasketColumn = styled.div`
@@ -30,10 +29,10 @@ const Block = styled.div`
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 `;
 
-const calculateTotal = (array: BasketItem[]) => {
+const calculateTotal = (arr: BasketItem[]) => {
   let total = 0;
-  for (let i = 0; i < array.length; i++) {
-    total = array[i].storeItem.price * array[i].quantity + total;
+  for (let i = 0; i < arr.length; i++) {
+    total = arr[i].storeItem.price * arr[i].quantity + total;
   }
   return total.toFixed(2);
 };

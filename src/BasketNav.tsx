@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { AppState } from "./App";
+import { AppState } from "./appSlice";
 
 const BasketBox = styled.div`
   display: flex;

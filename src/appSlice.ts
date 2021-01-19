@@ -1,6 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { StoreItem } from "./API";
-import { AppState } from "./App";
+
+export type BasketItem = {
+  storeItem: StoreItem;
+  quantity: number;
+};
+
+export type AppState = {
+  storeItems: StoreItem[];
+  basketItems: BasketItem[];
+  toggleBasket: boolean;
+  togglePopUp: boolean;
+  popUpItem: StoreItem;
+};
 
 const initialAppState: AppState = {
   storeItems: [],
