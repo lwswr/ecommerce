@@ -13,7 +13,7 @@ const BasketBox = styled.div`
   z-index: 12;
   height: 4rem;
   width: 4rem;
-  margin-top: 30px;
+  margin-top: 20px;
   background: white;
   border-radius: 5px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
@@ -34,9 +34,9 @@ const Title = styled.div`
 const Count = styled.div`
   position: absolute;
   text-align: center;
-  margin: 20px 0 0 45px;
+  margin: 0.5rem 0 0 3rem;
   padding: 5px;
-  width: 1rem;
+  width: 1.2rem;
   border-radius: 25px;
   background: #ee9b00;
   color: white;

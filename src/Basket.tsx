@@ -11,7 +11,7 @@ const BasketColumn = styled.div`
 
 const BasketItemsWindow = styled.div`
   background: rgb(240, 239, 239);
-  margin: 30px 35px 20px 20px;
+  margin: 20px 35px 20px 20px;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
     rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
