@@ -66,6 +66,7 @@ const Loading = styled.div`
   border-radius: 200px;
   background: rgba(0, 137, 216, 0.8);
   color: white;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 30px;
 `;
 
 function App() {

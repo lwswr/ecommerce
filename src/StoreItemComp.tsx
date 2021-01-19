@@ -2,6 +2,7 @@ import * as React from "react";
 import { StoreItem } from "./API";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { AppState } from "./App";
 
 const StoreItemContainer = styled.div`
   display: flex;
@@ -75,13 +76,13 @@ export const StoreItemComp = ({
   addItem: (id: number, qty: number) => void;
   togglePU: (toggle: boolean, id: number) => void;
 }) => {
-  const togglePopUpView = useSelector(selectPopUpToggle);
+  const { togglePopUp } = useSelector(selectState);
   const [qty, setQty] = React.useState<number>(1);
 
   return (
     <StoreItemContainer key={storeItem.id}>
       <Column>
-        <StoreItemTitle onClick={() => togglePU(togglePopUpView, storeItem.id)}>
+        <StoreItemTitle onClick={() => togglePU(togglePopUp, storeItem.id)}>
           {storeItem.title}
         </StoreItemTitle>
         <StoreItemPrice>£{storeItem.price.toFixed(2)}</StoreItemPrice>
@@ -113,4 +114,4 @@ export const StoreItemComp = ({
   );
 };
 
-const selectPopUpToggle = (togglePopUp: boolean) => togglePopUp;
+const selectState = ({ state }: { state: AppState }) => state;

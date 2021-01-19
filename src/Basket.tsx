@@ -19,7 +19,7 @@ const BasketItemsWindow = styled.div`
   padding: 0.5rem 0.5rem 0.1rem 0.5rem;
 `;
 
-const Total = styled.div`
+const Block = styled.div`
   background: white;
   margin-bottom: 0.5rem;
   display: flex;
@@ -46,16 +46,24 @@ export const Basket = ({ basketItems }: { basketItems: BasketItem[] }) => {
     <BasketColumn>
       {toggleBasketView ? (
         <BasketItemsWindow>
-          {basketItems.map((basketItem) => {
-            return (
-              <BasketItemComp
-                key={basketItem.storeItem.id}
-                basketItem={basketItem}
-                onDelete={(_id) => dispatch(removeItemFromBasket({ id: _id }))}
-              />
-            );
-          })}
-          <Total>Total - £{calculateTotal(basketItems)}</Total>
+          {basketItems.length > 0 ? (
+            <div>
+              {basketItems.map((basketItem) => {
+                return (
+                  <BasketItemComp
+                    key={basketItem.storeItem.id}
+                    basketItem={basketItem}
+                    onDelete={(_id) =>
+                      dispatch(removeItemFromBasket({ id: _id }))
+                    }
+                  />
+                );
+              })}
+            </div>
+          ) : (
+            <Block>There are no items in the basket</Block>
+          )}
+          <Block>Total - £{calculateTotal(basketItems)}</Block>
         </BasketItemsWindow>
       ) : null}
     </BasketColumn>
