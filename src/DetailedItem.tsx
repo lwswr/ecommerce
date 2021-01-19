@@ -71,7 +71,11 @@ const Inputs = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 30px;
+  font-size: 2rem;
+`;
+
+const Desc = styled.div`
+  font-size: 1rem;
 `;
 
 const Price = styled.div`
@@ -99,7 +103,7 @@ export const DetailedItem = ({
     <ItemContainer>
       <ItemWindow>
         <Title>{item.title}</Title>
-        <div>{item.description}</div>
+        <Desc>{item.description}</Desc>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <img
             src={item.image}

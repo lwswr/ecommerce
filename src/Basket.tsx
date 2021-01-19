@@ -5,8 +5,8 @@ import { BasketItem, removeItemFromBasket } from "./appSlice";
 import { BasketItemComp } from "./BasketItemComp";
 
 const BasketColumn = styled.div`
-  width: 21%;
-  z-index: 9;
+  width: 22%;
+  z-index: 10;
 `;
 
 const BasketItemsWindow = styled.div`
