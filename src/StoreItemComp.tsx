@@ -108,7 +108,7 @@ export const StoreItemComp = ({
       <img
         src={storeItem.image}
         alt=""
-        style={{ height: "120px", width: "90px" }}
+        style={{ height: "120px", width: "auto" }}
       />
     </StoreItemContainer>
   );
