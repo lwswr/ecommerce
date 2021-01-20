@@ -6,12 +6,15 @@ import {
   addItemToBasket,
   AppState,
   setData,
+  sortOptions,
   toggleBasket,
   togglePopUp,
+  updateSortOption,
 } from "./appSlice";
 import { Basket } from "./Basket";
 import { BasketNav } from "./BasketNav";
 import { DetailedItem } from "./DetailedItem";
+import { Selector } from "./Selector";
 import { AddDispatch } from "./store";
 import { StoreItems } from "./StoreItems";
 import { SVGs } from "./SVGs";
@@ -113,15 +116,24 @@ function App() {
               }}
             />
           ) : (
-            <StoreItems
-              storeItems={state.storeItems}
-              addItem={(_id, _qty) => {
-                dispatch(addItemToBasket({ id: _id, qty: _qty }));
-              }}
-              togglePU={(_toggle, _id) => {
-                dispatch(togglePopUp({ toggle: _toggle, id: _id }));
-              }}
-            />
+            <div>
+              <Selector
+                selectedOption={sortOptions}
+                value={state.currentSortOption}
+                onChange={(_option) => {
+                  dispatch(updateSortOption({ option: _option }));
+                }}
+              />
+              <StoreItems
+                storeItems={state.storeItems}
+                addItem={(_id, _qty) => {
+                  dispatch(addItemToBasket({ id: _id, qty: _qty }));
+                }}
+                togglePU={(_toggle, _id) => {
+                  dispatch(togglePopUp({ toggle: _toggle, id: _id }));
+                }}
+              />
+            </div>
           )}
         </div>
       )}

@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { StoreItem } from "./API";
 
+export const sortOptions = ["sort by", "alphabetical", "price"] as const;
+
+export type SortOption = typeof sortOptions[number];
+
 export type BasketItem = {
   storeItem: StoreItem;
   quantity: number;
@@ -8,17 +12,21 @@ export type BasketItem = {
 
 export type AppState = {
   storeItems: StoreItem[];
+  storeItemsBuffer: StoreItem[];
   basketItems: BasketItem[];
   toggleBasket: boolean;
   togglePopUp: boolean;
+  currentSortOption: SortOption;
   popUpItem: StoreItem;
 };
 
 const initialAppState: AppState = {
   storeItems: [],
+  storeItemsBuffer: [],
   basketItems: [],
   toggleBasket: false,
   togglePopUp: false,
+  currentSortOption: "sort by",
   popUpItem: {
     id: 1,
     title: "",
@@ -29,6 +37,12 @@ const initialAppState: AppState = {
   },
 };
 
+const sortList = (arr: StoreItem[], key: SortOption) => {
+  return key === "price"
+    ? arr.slice(0).sort((a, b) => a.price - b.price)
+    : arr.slice(0).sort((a, b) => a.title.localeCompare(b.title));
+};
+
 const appSlice = createSlice({
   name: "appSlice",
   initialState: initialAppState,
@@ -36,6 +50,7 @@ const appSlice = createSlice({
     // after api called on render payload of items is set to storeItems
     setData: (state, { payload }: PayloadAction<{ items: StoreItem[] }>) => {
       state.storeItems = payload.items;
+      state.storeItemsBuffer = payload.items;
     },
     // uses id
     addItemToBasket: (
@@ -83,6 +98,18 @@ const appSlice = createSlice({
         state.togglePopUp = !payload.toggle;
       }
     },
+    updateSortOption: (
+      state,
+      { payload }: PayloadAction<{ option: SortOption }>
+    ) => {
+      state.currentSortOption = payload.option;
+      state.currentSortOption === "sort by"
+        ? (state.storeItems = state.storeItemsBuffer)
+        : (state.storeItems = sortList(
+            state.storeItems,
+            state.currentSortOption
+          ));
+    },
   },
 });
 
@@ -92,6 +119,7 @@ export const {
   removeItemFromBasket,
   toggleBasket,
   togglePopUp,
+  updateSortOption,
 } = appSlice.actions;
 
 export default appSlice.reducer;
