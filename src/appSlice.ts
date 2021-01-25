@@ -12,7 +12,6 @@ export type BasketItem = {
 
 export type AppState = {
   storeItems: StoreItem[];
-  storeItemsBuffer: StoreItem[];
   basketItems: BasketItem[];
   toggleBasket: boolean;
   togglePopUp: boolean;
@@ -22,7 +21,6 @@ export type AppState = {
 
 const initialAppState: AppState = {
   storeItems: [],
-  storeItemsBuffer: [],
   basketItems: [],
   toggleBasket: false,
   togglePopUp: false,
@@ -40,7 +38,9 @@ const initialAppState: AppState = {
 const sortList = (arr: StoreItem[], key: SortOption) => {
   return key === "price"
     ? arr.slice(0).sort((a, b) => a.price - b.price)
-    : arr.slice(0).sort((a, b) => a.title.localeCompare(b.title));
+    : key === "alphabetical"
+    ? arr.slice(0).sort((a, b) => a.title.localeCompare(b.title))
+    : arr.slice(0).sort((a, b) => a.id - b.id);
 };
 
 const appSlice = createSlice({
@@ -50,9 +50,8 @@ const appSlice = createSlice({
     // after api called on render payload of items is set to storeItems
     setData: (state, { payload }: PayloadAction<{ items: StoreItem[] }>) => {
       state.storeItems = payload.items;
-      state.storeItemsBuffer = payload.items;
     },
-    // uses id
+    // uses id to add item with same id to basketItems state
     addItemToBasket: (
       state: AppState,
       { payload }: PayloadAction<{ id: number; qty: number }>
@@ -103,12 +102,7 @@ const appSlice = createSlice({
       { payload }: PayloadAction<{ option: SortOption }>
     ) => {
       state.currentSortOption = payload.option;
-      state.currentSortOption === "sort by"
-        ? (state.storeItems = state.storeItemsBuffer)
-        : (state.storeItems = sortList(
-            state.storeItems,
-            state.currentSortOption
-          ));
+      state.storeItems = sortList(state.storeItems, state.currentSortOption);
     },
   },
 });
