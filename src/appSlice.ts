@@ -68,6 +68,11 @@ const appSlice = createSlice({
             storeItem: state.storeItems[index],
             quantity: payload.qty,
           });
+        } else {
+          const itemInBasket = state.basketItems.findIndex(
+            (item) => item.storeItem.id === payload.id
+          );
+          state.basketItems[itemInBasket].quantity += payload.qty;
         }
       }
     },
