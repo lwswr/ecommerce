@@ -57,22 +57,25 @@ const appSlice = createSlice({
       { payload }: PayloadAction<{ id: number; qty: number }>
     ) => {
       if (payload.id) {
-        const isAlreadyInBasket = state.basketItems.some(
+        // check if item is already in the basket
+        const isAlreadyInBasket: boolean = state.basketItems.some(
           (item) => item.storeItem.id === payload.id
         );
+        // add item and qty to basket
         if (isAlreadyInBasket === false) {
           const index: number = state.storeItems.findIndex(
-            (_item) => _item.id === payload.id
+            (item) => item.id === payload.id
           );
           state.basketItems.push({
             storeItem: state.storeItems[index],
             quantity: payload.qty,
           });
+          // if already in basket find id of item and update the qty
         } else {
-          const itemInBasket = state.basketItems.findIndex(
+          const idOfItemInBasket: number = state.basketItems.findIndex(
             (item) => item.storeItem.id === payload.id
           );
-          state.basketItems[itemInBasket].quantity += payload.qty;
+          state.basketItems[idOfItemInBasket].quantity += payload.qty;
         }
       }
     },
